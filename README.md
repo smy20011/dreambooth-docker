@@ -1,9 +1,15 @@
-# DreamBooth training example
+# DreamBooth local docker file for windows/linux
 
 [DreamBooth](https://arxiv.org/abs/2208.12242) is a method to personalize text2image models like stable diffusion given just a few(3~5) images of a subject.
 
-The training script in this repo is adapted from TheLastBen's diffuser repo. Include an improvement that allows you to train it using 11gb GPU memory.
+The training script in this repo is adapted from ShivamShrirao's diffuser repo. See [here](https://github.com/ShivamShrirao/diffusers/tree/main/examples/dreambooth) for detailed training command.
 
+Docker file copy the ShivamShrirao's train_dreambooth.py to root directory. Replace any train_dreambooth.py in original doc with /train_dreambooth.py. Eg, if you want to run `accelerate launch train_dreambooth.py` you need to run following
+
+```bash
+sudo docker run -it --gpus=all --ipc=host -v $(pwd):/train -e HUGGING_FACE_HUB_TOKEN=$(cat ~/.huggingface/token)  smy20011/dreambooth:latest \
+  accelerate launch /train_dreambooth.py (your arguments here)
+```
 
 ## Running locally 
 
@@ -39,7 +45,7 @@ export INSTANCE_DIR="path-to-instance-images"
 export OUTPUT_DIR="path-to-save-model"
 
 sudo docker run -it --gpus=all --ipc=host -v $(pwd):/train -e HUGGING_FACE_HUB_TOKEN=$(cat ~/.huggingface/token)  smy20011/dreambooth:latest \
-  accelerate launch train_dreambooth.py \
+  accelerate launch /train_dreambooth.py \
   --pretrained_model_name_or_path=$MODEL_NAME --use_auth_token \
   --instance_data_dir=$INSTANCE_DIR \
   --output_dir=$OUTPUT_DIR \
@@ -65,7 +71,7 @@ export CLASS_DIR="path-to-class-images"
 export OUTPUT_DIR="path-to-save-model"
 
 sudo docker run -it --gpus=all --ipc=host -v $(pwd):/train -e HUGGING_FACE_HUB_TOKEN=$(cat ~/.huggingface/token)  smy20011/dreambooth:latest \
-  accelerate launch train_dreambooth.py \
+  accelerate launch /train_dreambooth.py \
   --pretrained_model_name_or_path=$MODEL_NAME --use_auth_token \
   --instance_data_dir=$INSTANCE_DIR \
   --class_data_dir=$CLASS_DIR \
@@ -94,7 +100,7 @@ export CLASS_DIR="path-to-class-images"
 export OUTPUT_DIR="path-to-save-model"
 
 sudo docker run -it --gpus=all --ipc=host -v $(pwd):/train -e HUGGING_FACE_HUB_TOKEN=$(cat ~/.huggingface/token)  smy20011/dreambooth:latest \
-  accelerate launch train_dreambooth.py \
+  accelerate launch /train_dreambooth.py \
   --pretrained_model_name_or_path=$MODEL_NAME --use_auth_token \
   --instance_data_dir=$INSTANCE_DIR \
   --class_data_dir=$CLASS_DIR \
