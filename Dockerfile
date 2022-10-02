@@ -1,11 +1,18 @@
-FROM nvcr.io/nvidia/pytorch:22.08-py3
+# syntax=docker/dockerfile:1
+FROM pytorch/pytorch:1.12.1-cuda11.3-cudnn8-devel AS builder
 WORKDIR /
-ENV FORCE_CUDA=1 MAX_JOBS=3
-RUN pip3 install -v git+https://github.com/facebookresearch/xformers@51dd119#egg=xformers transformers ftfy scipy
-RUN git clone https://github.com/ShivamShrirao/diffusers && \
+ENV FORCE_CUDA=1 MAX_JOBS=3 TORCH_CUDA_ARCH_LIST="5.0;5.2;6.0;6.1+PTX;7.0;7.5+PTX;8.0;8.6+PTX" python_abi=cp37-cp37m
+RUN apt-get update && apt-get install -y git
+RUN pip3 wheel -v git+https://github.com/facebookresearch/xformers@51dd119#egg=xformers
+
+FROM pytorch/pytorch:1.12.1-cuda11.3-cudnn8-runtime
+WORKDIR /
+RUN --mount=type=bind,target=whls,from=builder apt-get update && apt-get install -y git && \
+    git clone https://github.com/ShivamShrirao/diffusers && \
     cd diffusers/examples/dreambooth/ && \
-    pip install --no-cache-dir /diffusers triton==2.0.0.dev20220701 bitsandbytes && \
+    pip install --no-cache-dir /diffusers triton==2.0.0.dev20220701 bitsandbytes /whls/xformers*.whl && \
     pip install --no-cache-dir -r requirements.txt && \
-    cp train_dreambooth.py /
+    cp train_dreambooth.py / && \
+    rm -rf /var/lib/apt/lists/*
 WORKDIR /train
 ENV HF_HOME=/train/.hub
