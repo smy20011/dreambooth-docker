@@ -46,7 +46,7 @@ export OUTPUT_DIR="path-to-save-model"
 
 sudo docker run -it --gpus=all --ipc=host -v $(pwd):/train -e HUGGING_FACE_HUB_TOKEN=$(cat ~/.huggingface/token)  smy20011/dreambooth:latest \
   accelerate launch /train_dreambooth.py \
-  --pretrained_model_name_or_path=$MODEL_NAME --use_auth_token \
+  --pretrained_model_name_or_path=$MODEL_NAME \
   --instance_data_dir=$INSTANCE_DIR \
   --output_dir=$OUTPUT_DIR \
   --instance_prompt="a photo of sks dog" \
@@ -72,7 +72,7 @@ export OUTPUT_DIR="path-to-save-model"
 
 sudo docker run -it --gpus=all --ipc=host -v $(pwd):/train -e HUGGING_FACE_HUB_TOKEN=$(cat ~/.huggingface/token)  smy20011/dreambooth:latest \
   accelerate launch /train_dreambooth.py \
-  --pretrained_model_name_or_path=$MODEL_NAME --use_auth_token \
+  --pretrained_model_name_or_path=$MODEL_NAME \
   --instance_data_dir=$INSTANCE_DIR \
   --class_data_dir=$CLASS_DIR \
   --output_dir=$OUTPUT_DIR \
@@ -101,7 +101,7 @@ export OUTPUT_DIR="path-to-save-model"
 
 sudo docker run -it --gpus=all --ipc=host -v $(pwd):/train -e HUGGING_FACE_HUB_TOKEN=$(cat ~/.huggingface/token)  smy20011/dreambooth:latest \
   accelerate launch /train_dreambooth.py \
-  --pretrained_model_name_or_path=$MODEL_NAME --use_auth_token \
+  --pretrained_model_name_or_path=$MODEL_NAME \
   --instance_data_dir=$INSTANCE_DIR \
   --class_data_dir=$CLASS_DIR \
   --output_dir=$OUTPUT_DIR \
