@@ -1,0 +1,2 @@
+#!/bin/bash
+python -u "$@" 2>&1 | tr '\r' '\n'

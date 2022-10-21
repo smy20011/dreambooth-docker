@@ -8,6 +8,7 @@ RUN pip3 wheel bitsandbytes
 
 FROM pytorch/pytorch:1.12.1-cuda11.3-cudnn8-devel
 WORKDIR /
+ADD https://api.github.com/repos/ShivamShrirao/diffusers/git/refs/heads/main /version.json
 RUN --mount=type=bind,target=whls,from=builder apt-get update && apt-get install -y git && \
     git clone https://github.com/ShivamShrirao/diffusers && \
     cd diffusers/examples/dreambooth/ && \
@@ -15,5 +16,6 @@ RUN --mount=type=bind,target=whls,from=builder apt-get update && apt-get install
     pip install --no-cache-dir -r requirements.txt && \
     cp train_dreambooth.py / && \
     rm -rf /var/lib/apt/lists/*
+COPY start_training /start_training
 WORKDIR /train
 ENV HF_HOME=/train/.hub
