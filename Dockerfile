@@ -17,5 +17,7 @@ RUN --mount=type=bind,target=whls,from=builder apt-get update && apt-get install
     cp train_dreambooth.py / && \
     rm -rf /var/lib/apt/lists/*
 COPY start_training /start_training
+# Fix waifu diffusion training.
+RUN pip install scipy
 WORKDIR /train
 ENV HF_HOME=/train/.hub
