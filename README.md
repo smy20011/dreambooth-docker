@@ -13,7 +13,7 @@ sudo docker run -it --gpus=all --ipc=host -v $(pwd):/train -e HUGGING_FACE_HUB_T
 
 ## Running locally 
 
-You need to install WSL with docker support. For linux users, make sure you have NVIDIA driver installed and have latest docker installed.
+You need to install WSL with docker support. For linux users, make sure you have NVIDIA driver installed and have latest docker installed. If you still cannot access GPU, make sure you have [nvidia container toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) installed.
 
 For Windows users, follow the guide [here](https://docs.nvidia.com/cuda/wsl-user-guide/index.html) and [here](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers). You don't need to do the "CUDA Support for WSL2 section".
 You can also follow this [Youtube](https://www.youtube.com/watch?v=YozfiLI1ogY) video for reference as well.
