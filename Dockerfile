@@ -11,7 +11,7 @@ WORKDIR /
 RUN --mount=type=bind,target=whls,from=builder apt-get update && apt-get install -y git && \
     git clone https://github.com/ShivamShrirao/diffusers && \
     cd diffusers/examples/dreambooth/ && \
-    git checkout 45446addc && \
+    git checkout 5e323b4 && \
     pip install --no-cache-dir /diffusers triton==2.0.0.dev20220701 /whls/xformers*.whl /whls/bitsandbytes*.whl scipy && \
     pip install --no-cache-dir -r requirements.txt && \
     cp train_dreambooth.py / && \
