@@ -8,12 +8,13 @@ RUN pip3 wheel bitsandbytes
 
 FROM pytorch/pytorch:1.12.1-cuda11.3-cudnn8-devel
 WORKDIR /
-RUN --mount=type=bind,target=whls,from=builder apt-get update && apt-get install -y git && \
+RUN --mount=type=bind,target=whls,from=builder apt-get update && apt-get install -y git wget && \
     git clone https://github.com/ShivamShrirao/diffusers && \
     cd diffusers/examples/dreambooth/ && \
-    git checkout 5e323b4 && \
-    pip install --no-cache-dir markupsafe==2.0.1 /diffusers triton==2.0.0.dev20220701 /whls/xformers*.whl /whls/bitsandbytes*.whl scipy && \
+    git checkout 4affee && \
+    pip install --no-cache-dir /diffusers triton==2.0.0.dev20220701 /whls/xformers*.whl /whls/bitsandbytes*.whl scipy pytorch-lightning && \
     pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir -I markupsafe==2.0.1 OmegaConf && \
     cp train_dreambooth.py / && \
     rm -rf /var/lib/apt/lists/*
 COPY start_training /start_training
