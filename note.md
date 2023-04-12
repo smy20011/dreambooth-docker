@@ -1,6 +1,6 @@
 ### build docker image
 
 ```
-docker build -t dreambooth:v0.1.11 .
+DOCKER_BUILDKIT=1 docker build . -t dreambooth:v1
 ```
 
